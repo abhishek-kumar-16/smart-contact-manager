@@ -3,10 +3,14 @@
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img th:src="@{/images/contact.png}" class="h-8" alt="Flowbite Logo" />
 
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-black">Smart Contact
+            <span class=" self-center text-2xl font-semibold whitespace-nowrap text-blue-400 dark:text-white">Smart Contact
                 Manager</span>
         </a>
+        
         <div class="flex gap-2 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button id="toggle_theme" class="bg-grey-200 px-3 py-2 rounded-md text-gray-900 dark:bg-gray-800 dark:text-white">
+                <i class="fa-solid fa-circle-half-stroke"></i> <span>Light</span>
+            </button>
             <a 
             th:href="@{/signup}"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sign
