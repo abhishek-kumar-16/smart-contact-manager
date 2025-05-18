@@ -3,6 +3,7 @@ package com.smartmanager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import com.smartmanager.helpers.notificationType;
 import com.smartmanager.services.userServices;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -68,11 +70,17 @@ userServices userServices;
 //    handling the request for signup for user
 
  @RequestMapping(value = "register", method=RequestMethod.POST)
- public String  ProcessRegister(@ModelAttribute signupForm signupForm, HttpSession session) {
+ public String  ProcessRegister(@Valid @ModelAttribute signupForm signupForm,BindingResult rBindingResult, HttpSession session) {
     // when the user clicks on the signup button, this method will be called
     System.out.println("signup page handler");
     // System.out.println(signupForm.getAbout());
+    if(rBindingResult.hasErrors()){
+        System.out.println("Error in form");
     
+        notification message=notification.builder().msg("Please fill all the fields").type(notificationType.red).build();
+        session.setAttribute("message", message);
+        return "signup";
+    }
 
 //  now do the validation of the data
    
