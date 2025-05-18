@@ -1,0 +1,16 @@
+<div th:if="${session.message}" 
+     th:fragment="notificationbox" 
+     th:object="${session.message}" 
+     class="p-4 mb-4 text-sm rounded-lg dark:bg-gray-800"
+     th:classappend="
+       ' text-' + *{type} + '-800' + 
+       ' bg-' + *{type} + '-50' +
+       ' dark:text-' + *{type} + '-400'"
+     >
+  
+  <span class="font-medium" th:text="*{msg}"></span> 
+  
+  <!--  running this below block of code to remove the notification after once showing to users -->
+  <th:block th:text="${@sessionHelpers.removeNotification()}"></th:block>
+
+</div>

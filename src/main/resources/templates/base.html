@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)">
+<html class="light " lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="parent(content,title,script)" >
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/output.css}" />
     <title th:replace="${title}">Base Page</title>
 </head>
-<body>
+<body class="dark:bg-gray-900 bg-gray-100 dark:text-white">
   <!-- common header -->
     <div th:replace="navbar::navbar"></div>
    
@@ -22,7 +22,7 @@
 
 
     <!-- common footer -->
-     <footer class="p-4">Hey This is Abhishek Kumar here</footer>
+     <!-- <footer class="p-4">Hey This is Abhishek Kumar here</footer> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
    
     <script th:src="@{/js/script.js}"></script>
