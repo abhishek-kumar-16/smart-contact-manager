@@ -7,9 +7,11 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.smartmanager.entities.user;
+import com.smartmanager.helpers.AppConstants;
 import com.smartmanager.helpers.ResourceNotFoundException;
 import com.smartmanager.repositories.userRepo;
 import com.smartmanager.services.userServices;
@@ -22,14 +24,21 @@ public class userServiceImpl implements userServices{
     private userRepo userRepo;
     // here we are using the userRepo to access the database
     private Logger logger=  LoggerFactory.getLogger(userServiceImpl.class);
-
-  
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public user saveUser(user user) {
         String userID=UUID.randomUUID().toString();
         user.setUserId(userID);
         // simillarly passwords can be encoded here
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // here we are using the password encoder to encode the password
+
+        // setting the default role of user
+        user.setRoleList(List.of(AppConstants.ROLE_USER));
+        // here we are setting the default role of user to ROLE_USER
         logger.info("user saved successfully");
         return userRepo.save(user);
     }
