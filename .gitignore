@@ -51,3 +51,6 @@ src/main/resources/static/css/output.css
 # OS
 .DS_Store
 Thumbs.db
+
+# Ignore config file with secrets
+src/main/resources/application.properties
