@@ -77,7 +77,7 @@ public class userServiceImpl implements userServices{
     public void deleteUserById(String id) {
         user old_user=userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         userRepo.delete(old_user);
-        logger.info("user deleted successfully");
+        // logger.info("user deleted successfully");
     }
 
     @Override
@@ -103,6 +103,13 @@ public class userServiceImpl implements userServices{
     @Override
     public List<user> getAllUsers() {
        return userRepo.findAll();
+    }
+
+    @Override
+    public user getUserByEmail(String email) {
+        user old_user=userRepo.findByEmail(email).orElse(null);
+        return old_user;
+        
     }
 
 
