@@ -1,3 +1,32 @@
-<h1>this is profile page</h1>
-<h1 th:text="${user.name}"></h1>
-<h1 th:text="${user.email}"></h1>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}" >
+    <head>
+  <title th:text="${user.name}  + ' | Smart Contact Manager'"></title>
+    </head>
+    <body >
+
+
+     <div id="content">
+  
+      <!-- sidebar  -->
+    <div th:if="${user}">
+        <div th:replace="user/sidebar::sidebar"></div>
+    </div>
+
+         <div  class="p-4 sm:pl-64  pt-500 mt-10 text-red-500" style="height: 1000px;  margin-left: 17%; margin-top: 4%;" >
+    <h1 class="text-5xl font-bold">
+  Welcome to profile page
+</h1>
+
+  </div>
+
+ </div>
+
+
+
+ <script>
+    console.log("This is the profile page");
+ </script>
+    </body>
+ 
+</html>
