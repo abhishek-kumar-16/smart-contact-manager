@@ -2,6 +2,9 @@ package com.smartmanager.controller;
 
 import java.net.Authenticator;
 
+import javax.management.Notification;
+
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,11 +15,18 @@ import com.smartmanager.entities.contact;
 import com.smartmanager.entities.user;
 import com.smartmanager.forms.ContactForms;
 import com.smartmanager.helpers.Helper;
+import com.smartmanager.helpers.notification;
+import com.smartmanager.helpers.notificationType;
 import com.smartmanager.repositories.ContactRepo;
 import com.smartmanager.services.ContactServices;
+import com.smartmanager.services.imageServices;
 import com.smartmanager.services.userServices;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
@@ -37,6 +47,9 @@ public class ContactController {
    @Autowired
    private userServices userServices;
 
+    @Autowired
+    private imageServices imageServices;
+
     ContactController(ContactRepo contactRepo) {
         this.contactRepo = contactRepo;
     }
@@ -53,13 +66,26 @@ public class ContactController {
     }
    
     @RequestMapping(value = "/add", method=RequestMethod.POST)
-    public String saveContact(@ModelAttribute ContactForms contactForms, Authentication authentication) {
+    public String saveContact(@Valid @ModelAttribute ContactForms contactForms, BindingResult result, Authentication authentication, HttpSession session) {
+        
+        if( result.hasErrors()) {
+            //  if there are validation errors, return to the add contact page
+            System.out.println("Validation errors occurred");
+            return "user/add_contact";
+        }
+        
+        
         //  this method will handle the request to save the contact
         System.out.println("inside processing add contact form");
         System.out.println(contactForms);
 
         String userName= Helper.getEmailOfUser(authentication);
         user user = userServices.getUserByEmail(userName);
+ 
+         // uploading image to cloud and using the url in the contact entity
+         String imageURL= imageServices.uploadImage(contactForms.getContactImage());
+
+
         // convert ContactForms to contact entity
        contact newContact = new contact();
         newContact.setName(contactForms.getName());
@@ -70,8 +96,12 @@ public class ContactController {
         newContact.setFavorite(contactForms.isFavorite());
         newContact.setSocialMedia(contactForms.getSocialMedia());
         newContact.setUser(user);
+        newContact.setProfilePic(imageURL);
         
        contactServices.saveContact(newContact);
+    
+       notification message=notification.builder().msg("Contact Added Successfully").type(notificationType.green).build();
+        session.setAttribute("message", message); //  can't pass message directly,  need to build it
 
         return "redirect:/user/contact/add";
     }
