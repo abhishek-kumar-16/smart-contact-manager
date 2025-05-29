@@ -3,6 +3,7 @@ package com.smartmanager.services;
 import java.util.List;
 
 import com.smartmanager.entities.contact;
+import com.smartmanager.entities.user;
 
 public interface ContactServices {
 
@@ -26,8 +27,11 @@ void deleteContact(String id);
 
 List<contact> search(String name, String email, String phone);
 
-// get contacts by userID
+// get contacts  by userid
+// List<contact> getContactsByUserId(String userId);
 
-List<contact> getContactsByUserId(String id);
+// get contacts by user
+
+List<contact> getContactsByUser(user user);
 
 }

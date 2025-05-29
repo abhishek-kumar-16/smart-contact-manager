@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.stereotype.Service;
 
 import com.smartmanager.entities.contact;
+import com.smartmanager.entities.user;
 import com.smartmanager.helpers.ResourceNotFoundException;
 import com.smartmanager.repositories.ContactRepo;
 import com.smartmanager.services.ContactServices;
@@ -69,10 +70,18 @@ public class ContactServicesImpl  implements ContactServices{
     }
 
     @Override
-    public List<contact> getContactsByUserId(String id) {
-       return contactRepo.findByUserID(id);
+    public List<contact> getContactsByUser(user user) {
+       return contactRepo.findByuser(user);
         // This will return the contacts with the given user id
     }
+
+    // @Override
+    // public List<contact> getContactsByUserId(String userId) {
+    //     // TODO Auto-generated method stub
+    //    return contactRepo.findByUserId(userId);
+    // }
+
+   
 
 
 

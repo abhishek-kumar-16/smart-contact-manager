@@ -1,6 +1,7 @@
 package com.smartmanager.controller;
 
 import java.net.Authenticator;
+import java.util.List;
 
 import javax.management.Notification;
 
@@ -104,6 +105,19 @@ public class ContactController {
         session.setAttribute("message", message); //  can't pass message directly,  need to build it
 
         return "redirect:/user/contact/add";
+    }
+
+    // this method will handle the request to show the contact list page
+    @RequestMapping("")
+    public String contactList(Model model, Authentication authentication) {
+
+
+        String userName= Helper.getEmailOfUser(authentication);
+        user user = userServices.getUserByEmail(userName);
+    List<contact> contacts=    contactServices.getContactsByUser(user);
+
+        model.addAttribute("contacts", contacts);
+        return "user/contact_list";
     }
     
     
