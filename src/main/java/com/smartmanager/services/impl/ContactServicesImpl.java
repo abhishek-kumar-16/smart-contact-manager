@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.stereotype.Service;
 
@@ -63,17 +67,47 @@ public class ContactServicesImpl  implements ContactServices{
         // This will delete the contact with the given id if it exists
     }
 
+  
+
     @Override
-    public List<contact> search(String name, String email, String phone) {
+    public Page<contact> getContactsByUser(user user,int page, int size, String sortBy, String sortDirection) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
+        // This will return the contacts for the given user with pagination
+        // The pageable parameter allows for pagination of results
+        var pageable =PageRequest.of(page, size)
+                .withSort(sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+       return contactRepo.findByuser(user, pageable);
+        // This will return the contacts with the given user id
     }
 
     @Override
-    public List<contact> getContactsByUser(user user) {
-       return contactRepo.findByuser(user);
-        // This will return the contacts with the given user id
+    public Page<contact> searchContactByName(user user, String name, int page, int size, String sortBy, String sortDirection) {
+       var pageable = PageRequest.of(page, size)
+                .withSort(sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+        // This will return the contacts with the given name
+        return  contactRepo.findByUserAndNameContainingIgnoreCase(user,name, pageable);
+        // The getContent() method returns the list of contacts from the page
     }
+
+    @Override
+    public Page<contact> searchContactByEmail(user user, String email, int page, int size, String sortBy, String sortDirection) {
+        var pageable = PageRequest.of(page, size)
+                .withSort(sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+        // This will return the contacts with the given email
+        return contactRepo.findByuserAndEmailContainingIgnoreCase(user,email, pageable);
+        // The getContent() method returns the list of contacts from the page
+    }
+
+    @Override
+    public Page<contact> searchContactByPhone(user user, String phone, int page, int size, String sortBy, String sortDirection) {
+        var pageable = PageRequest.of(page, size)
+                .withSort(sortDirection.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending());
+        // This will return the contacts with the given phone
+        return contactRepo.findByuserAndPhoneContainingIgnoreCase(user, phone, pageable);
+        // This will return the contacts with the given phone as a Page<contact>
+    }
+
+   
 
     // @Override
     // public List<contact> getContactsByUserId(String userId) {

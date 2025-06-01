@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
-
-<head>
-    <title th:text="${user.name}  + ' | Saved Contacts'"></title>
-</head>
-
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}" >
+    <head>
+  <title th:text="${user.name}  + ' | Dashboard'"></title>
+    </head>
+    <body >
 
 
-    <div id="content">
+     <div id="content">
+  
+      <!-- sidebar  -->
+    <div th:if="${user}">
+        <div th:replace="user/sidebar::sidebar"></div>
+    </div>
 
-        <!-- sidebar  -->
-        <div th:if="${user}">
-            <div th:replace="user/sidebar::sidebar"></div>
-        </div>
-
-        <div class="p-4 pl-64  pt-500 mt-10 text-red-500" style="  margin-left: 17%; margin-top: 4%;">
-
-
-            <div>
-                <h1 class="text-center text-4xl text-gray-800 pb-2 dark:text-white">All Your contacts </h1>
+         <div  class="p-4 pl-64  pt-500 mt-10 text-red-500" style="height: 1000px;  margin-left: 17%; margin-top: 4%;" >
+                    <div class="text-center  text-gray-800 pb-2 dark:text-white">
+                <h1 class="text-4xl">Search Results </h1>
+                <p class="text-2xl text-green-600" th:text="${contacts.totalElements} + ' result(s) found'">1 result(s) found</p>
             </div>
 
-            <!--  contact container here onwards -->
-
-            <div class="contact_container">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <!--  search container  -->
+<div class="search_contact_container">
+                <div  class="relative overflow-x-auto shadow-md sm:rounded-lg">
 
 <!-- search form -->
 
- <form th:object="${searchForm}" th:action="@{/user/contact/search}" validate="true">
+ <form th:object="${searchForm}" th:action="@{/user/contact/search}" >
                     <div
                         class=" flex items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
 
@@ -45,7 +40,7 @@
                             </label>
                             <select th:field="*{field}" id="countries_disabled"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="" >Select</option>
+                                <option value="">Select</option>
                                 <option value="name" >Name</option>
                                 <option value="phone">Phone</option>
                                 <option value="email">Email</option>
@@ -66,7 +61,7 @@
                             <!-- Input field with left padding to make room for icon -->
                             <input th:field="*{keyword}" type="text" id="table-search-users"
                                 class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search for users"  required/>
+                                placeholder="Search for users" required/>
                         </div>
 
 
@@ -135,13 +130,10 @@
                                 <td class="px-6 py-4">
 
                                     <div>
-                                        <!-- buttons heret to delete, view and update contacts -->
-
-                                        
                                         <a href=""><i class="fa-solid fa-trash h-6 w-6"></i></a>
 
                                         <a href=""><i class="fa-solid fa-pen h-6 w-6"></i></a>
-                                        <button th:data-id="${c.contactId}" th:onclick="loadContactData(this.getAttribute('data-id'))"><i class="fa-solid fa-eye h-6 w-6"></i></button>
+                                        <a href=""><i class="fa-solid fa-eye h-6 w-6"></i></a>
 
 
 
@@ -154,16 +146,14 @@
                     </table>
                     
                 </div>
-
-<h1 th:if="${contacts.empty}" class="text-center text-3xl ">No contact(s) found</h1>
+      
+<h1 th:if="${contacts.empty}" class="text-center text-3xl ">No result(s) found</h1>
             </div>
-
-
-            <!-- pagination -->
-            <nav aria-label="Page navigation example" class="flex items-center justify-center mt-4">
+   <!-- pagination -->
+            <nav th:unless="${contacts.empty}" aria-label="Page navigation example" class="flex items-center justify-center mt-4">
                 <ul class="flex items-center -space-x-px h-8 text-sm">
                     <li th:unless="${contacts.first}">
-                        <a th:href="@{'/user/contact?page='+ ${contacts.number-1}}"
+                        <a  th:href="@{'/user/contact/search?page='+ ${contacts.number-1}+ '&field='+ ${searchForm.field} + '&keyword='+ ${searchForm.keyword}}"
                             class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span class="sr-only">Previous</span>
                             <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true"
@@ -175,7 +165,7 @@
                     </li>
                     <li class="flex items-center" th:each="index: ${#numbers.sequence(0,contacts.totalPages - 1)}">
                         <a th:classappend="${index==contacts.number ? 'bg-blue-200 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'}"
-                            th:href="@{'/user/contact?page=' + ${index}}"
+                            th:href="@{'/user/contact/search?page=' + ${index}+ '&field='+ ${searchForm.field} + '&keyword='+ ${searchForm.keyword}}"
                             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span th:text="${index}+1"></span>
 
@@ -185,7 +175,7 @@
 
 
                     <li th:unless="${contacts.last}">
-                        <a th:href="@{'/user/contact?page='+ ${contacts.number+1}}"
+                        <a th:href="@{'/user/contact/search?page='+ ${contacts.number+1} + '&field='+ ${searchForm.field} + '&keyword='+ ${searchForm.keyword}}"
                             class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span class="sr-only">Next</span>
                             <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true"
@@ -198,23 +188,15 @@
                 </ul>
             </nav>
 
-            </h1>
+  </div>
 
-<div th:replace="~{user/contact_modal_view::contact_modal}"></div>
-
-        </div>
+ </div>
 
 
 
-
-    </div>
-
-
-    <script th:src="@{'/js/contact_modal.js'}"></script>
-
-    <script>
-        console.log("This is the profile page");
-    </script>
-</body>
-
+ <script>
+    console.log("This is the search contact page");
+ </script>
+    </body>
+ 
 </html>

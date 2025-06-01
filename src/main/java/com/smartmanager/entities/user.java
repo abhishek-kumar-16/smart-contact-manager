@@ -40,7 +40,7 @@ public class user implements UserDetails {
   @Column(length = 1000)  
   private String about;
   @Column(length = 1000)
-  private String profilePic;
+  private String profilePic="";
   private String phone;
 //   other things as well i can add
   private boolean enabled=true;

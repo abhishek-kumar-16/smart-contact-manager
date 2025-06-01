@@ -2,6 +2,8 @@ package com.smartmanager.entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -26,7 +28,9 @@ public class contact {
     private String description;
     private boolean isFavorite=false;
     private String socialMedia;
+    
     @ManyToOne
+    @JsonIgnore
     private user user;
 
 }

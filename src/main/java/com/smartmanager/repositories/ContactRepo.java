@@ -2,6 +2,9 @@ package com.smartmanager.repositories;
 
 import java.util.List;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,11 +20,22 @@ public interface ContactRepo extends JpaRepository<contact, String> {
 
 
     //  custom method defined here to find contacts by user
-     List<contact> findByuser(user user);
+     Page<contact> findByuser(user user,Pageable pageable);
 
-
+     
     // //  custom query to find contacts by user ID
     // @Query("SELECT c FROM Contact c WHERE c.user.userId = :userId")
     // List<contact> findByUserId(@Param("userId") String userId);
+
+
+    //  custom method to search contacts by name
+    Page<contact> findByUserAndNameContainingIgnoreCase(user user,String name, Pageable pageable); // here after findBy, the filed name should be in camelCase as per JPA naming conventions irrespective of the field name in the entity class
+    //  custom method to search contacts by email   
+    Page<contact> findByuserAndEmailContainingIgnoreCase(user user,String email,Pageable pageable);
+    //  custom method to search contacts by phone
+    Page<contact> findByuserAndPhoneContainingIgnoreCase(user user,String phone,Pageable pageable);
+    
+
+    
 
 }
