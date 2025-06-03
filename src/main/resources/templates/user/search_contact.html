@@ -130,10 +130,11 @@
                                 <td class="px-6 py-4">
 
                                     <div>
-                                        <a href=""><i class="fa-solid fa-trash h-6 w-6"></i></a>
+                                        <button th:data-id="${c.contactId}" th:onclick="deleteContact(this.getAttribute('data-id'))"><i
+                                                class="fa-solid fa-trash h-6 w-6"></i></button>
 
-                                        <a href=""><i class="fa-solid fa-pen h-6 w-6"></i></a>
-                                        <a href=""><i class="fa-solid fa-eye h-6 w-6"></i></a>
+                                        <a th:href="@{'/user/contact/view/+${c.contactId}'}"><i class="fa-solid fa-pen h-6 w-6"></i></a>
+                                       <button th:data-id="${c.contactId}" th:onclick="loadContactData(this.getAttribute('data-id'))"><i class="fa-solid fa-eye h-6 w-6"></i></button>
 
 
 
@@ -187,12 +188,12 @@
                     </li>
                 </ul>
             </nav>
-
+<div th:replace="~{user/contact_modal_view::contact_modal}"></div>
   </div>
 
  </div>
 
-
+ <script th:src="@{'/js/contact_modal.js'}"></script>
 
  <script>
     console.log("This is the search contact page");

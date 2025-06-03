@@ -34,5 +34,8 @@ public class ContactForms {
     private String description;
     private boolean isFavorite=false;
     private String socialMedia;
+    
+    // Maximum allowed file size is 10MB (validate in service/controller if needed)
     private MultipartFile ContactImage;
+    private String ProfilePicURL;
 }

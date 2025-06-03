@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
    
     <link rel="stylesheet" th:href="@{/css/output.css}" />
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+ 
+
     <title th:replace="${title}">Base Page</title>
 </head>
 <body class=" dark:bg-gray-900 bg-gray-100 dark:text-white">
@@ -34,8 +37,11 @@
 
 
     <!-- common footer -->
+     <!-- for pop up alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <!-- <footer class="p-4">Hey This is Abhishek Kumar here</footer> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    
    
     <script th:src="@{/js/script.js}"></script>
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.smartmanager.entities.contact;
@@ -180,4 +181,95 @@ public class ContactController {
         return "user/search_contact";
     }
 
-}
+
+    @RequestMapping("/delete/{contactId}")
+    public String deleteContact(
+        @PathVariable("contactId") String contactId)
+        {
+            contactServices.deleteContact(contactId);
+         
+        return "redirect:/user/contact";
+    }
+
+
+    // update contact view handler
+    @RequestMapping("/view/{contactId}")
+    public String updateViewContact(
+            @PathVariable("contactId") String contactId,
+            Model model, HttpSession session) {
+
+        // this method will handle the request to show the update contact page
+        contact contact = contactServices.geContactById(contactId);
+        if (contact == null) {
+            notification message = notification.builder().msg("Contact Not Found").type(notificationType.red)
+                    .build();
+            session.setAttribute("message", message);
+            return "redirect:/user/contact";
+        }
+
+        ContactForms contactForms = new ContactForms();
+        contactForms.setName(contact.getName());
+        contactForms.setEmail(contact.getEmail());
+        contactForms.setPhone(contact.getPhone());
+        contactForms.setAddress(contact.getAddress());
+        contactForms.setDescription(contact.getDescription());
+        contactForms.setFavorite(contact.isFavorite());
+        contactForms.setSocialMedia(contact.getSocialMedia());
+       contactForms.setProfilePicURL(contact.getProfilePic());
+
+        model.addAttribute("contactForms", contactForms);
+        model.addAttribute("contactId", contactId);
+
+        return "user/update_contact_view";
+    }
+
+    @RequestMapping(value="/update/{contactId}", method=RequestMethod.POST)
+    public String updateContact(
+        @PathVariable("contactId") String contactId,
+        @Valid @ModelAttribute ContactForms contactForms, 
+        BindingResult result, 
+        Authentication authentication, 
+        HttpSession session) {
+
+        // this method will handle the request to update the contact
+        if (result.hasErrors()) {
+            // if there are validation errors, return to the update contact page
+            System.out.println("Validation errors occurred");
+            return "user/update_contact_view";
+        }
+
+        // get the existing contact
+        contact existingContact = contactServices.geContactById(contactId);
+        if (existingContact == null) {
+            notification message = notification.builder().msg("Contact Not Found").type(notificationType.red)
+                    .build();
+            session.setAttribute("message", message);
+            return "redirect:/user/contact";
+        }
+
+        // uploading image to cloud and using the url in the contact entity
+        MultipartFile imageFile = contactForms.getContactImage();
+        String imageURL = (imageFile != null && !imageFile.isEmpty())
+                ? imageServices.uploadImage(imageFile)
+                : existingContact.getProfilePic();
+
+        // update the existing contact with new data
+        existingContact.setName(contactForms.getName());
+        existingContact.setEmail(contactForms.getEmail());
+        existingContact.setPhone(contactForms.getPhone());
+        existingContact.setAddress(contactForms.getAddress());
+        existingContact.setDescription(contactForms.getDescription());
+        existingContact.setFavorite(contactForms.isFavorite());
+        existingContact.setSocialMedia(contactForms.getSocialMedia());
+        existingContact.setProfilePic(imageURL);
+
+        contactServices.updateContact(existingContact);
+
+        notification message = notification.builder().msg("Contact Updated Successfully").type(notificationType.green)
+                .build();
+        session.setAttribute("message", message); // can't pass message directly, need to build it
+
+        return "redirect:/user/contact/view/"+ contactId; 
+    }
+
+} 

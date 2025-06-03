@@ -40,8 +40,7 @@ public class ContactServicesImpl  implements ContactServices{
 
     @Override
     public contact updateContact(contact contact) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateContact'");
+        return contactRepo.save(contact);
     }
 
     @Override
