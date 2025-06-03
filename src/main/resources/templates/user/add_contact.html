@@ -140,7 +140,8 @@
                             <!-- contact image -->
                             <div class="mb-3">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                                    for="small_size">Contact's Profile Pic</label>
+                                    for="small_size">Contact's Profile Pic, File size should be less than 10 MB</label>
+                                     <p th:if="${#fields.hasErrors('ContactImage')}" th:errors="*{ContactImage}" class="text-red-600"></p>
                                 <input
                                 id="image_file_input"
                                     class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"

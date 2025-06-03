@@ -2,6 +2,8 @@ package com.smartmanager.forms;
 
 import org.springframework.web.multipart.MultipartFile;
 
+
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 
 @Getter
 @Setter
@@ -35,7 +38,7 @@ public class ContactForms {
     private boolean isFavorite=false;
     private String socialMedia;
     
-    // Maximum allowed file size is 10MB (validate in service/controller if needed)
+    
     private MultipartFile ContactImage;
     private String ProfilePicURL;
 }
