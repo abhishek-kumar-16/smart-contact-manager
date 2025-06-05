@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}" >
+    <head>
+  <title>home page</title>
+    </head>
+    <body >
+         <div class="p-4 flex justify-center items-center" id="content">
+    
+ <div class="bg-white shadow-lg rounded-2xl p-8 max-w-md w-full text-center">
+    <div class="flex justify-center mb-4">
+      <svg class="w-16 h-16 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+    <h1 class="text-2xl font-bold text-green-600 mb-2">Email Verified!</h1>
+    <p class="text-gray-600 mb-6">Your email has been successfully verified. You can now log in and access your account.</p>
+    <a href="/login" class="bg-green-600 text-white px-6 py-2 rounded-full hover:bg-green-700 transition">Go to Login</a>
+  </div>
+  </div>
+ <script>
+    console.log("This is the home page");
+ </script>
+    </body>
+ 
+</html>
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

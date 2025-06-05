@@ -107,7 +107,7 @@ userServices userServices;
    System.out.println("User saved successfully");
 //   send message here of success
 
-  notification message=notification.builder().msg("Registration successful").type(notificationType.green).build();
+  notification message=notification.builder().msg("Registration successful ! Please verify the link sent to your to email to activate account !").type(notificationType.green).build();
 
 session.setAttribute("message", message);
     // now we need to redirect to the signup page

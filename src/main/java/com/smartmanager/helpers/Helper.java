@@ -7,6 +7,10 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 public class Helper {
+
+
+
+
   public static String  getEmailOfUser(Authentication authentication) {
     //  above authentication is passed which will  help to know which signin method, google, github , facebook etc was used
     // AuthenticationPrincipal principal = (AuthenticationPrincipal) authentication.getPrincipal();
@@ -41,4 +45,12 @@ else{
     
    
   }
+
+  public static String getVerificationLink(String emailToken) {
+    // This method will return the verification link for the user
+    // It will be used to send the verification link to the user
+    // It will be used in the email service
+    return "http://localhost:8081/auth/verify-email?emailToken=" + emailToken;
+  }
+
 }

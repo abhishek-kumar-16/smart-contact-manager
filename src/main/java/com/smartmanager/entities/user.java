@@ -43,9 +43,10 @@ public class user implements UserDetails {
   private String profilePic="";
   private String phone;
 //   other things as well i can add
-  private boolean enabled=true;
+  private boolean enabled=false;
     private boolean emailVerified=false;
     private boolean phoneVerified=false;
+    private String emailToken;
 
     @Enumerated(value = EnumType.STRING)
     private Providers provider=Providers.SELF;

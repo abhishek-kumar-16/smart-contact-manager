@@ -17,4 +17,5 @@ public interface userServices {
         List<user> getAllUsers();
         user getUserByEmail(String email);
         // more methods can be added as per the requirements
+        user findByEmailToken(String emailToken);
 }
