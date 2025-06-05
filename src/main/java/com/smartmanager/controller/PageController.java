@@ -36,6 +36,13 @@ userServices userServices;
        System.out.println("about page handler");
        return "about";
    }
+
+   @RequestMapping("products")
+   public String products() {
+       System.out.println("products page handler");
+       return "user/products";
+   }
+
    @RequestMapping("services")
    public String services() {
        System.out.println("services page handler");

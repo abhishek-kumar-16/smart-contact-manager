@@ -18,4 +18,5 @@ public interface userServices {
         user getUserByEmail(String email);
         // more methods can be added as per the requirements
         user findByEmailToken(String emailToken);
+        
 }

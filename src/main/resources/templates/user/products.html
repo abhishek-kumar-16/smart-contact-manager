@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}" >
+    <head>
+  <title th:text="${user.name}  + ' | Products'"></title>
+    </head>
+    <body >
+
+
+     <div id="content">
+  
+      <!-- sidebar  -->
+    <div th:if="${user}">
+        <div th:replace="user/sidebar::sidebar"></div>
+    </div>
+
+         <div  class="mt-36 md:mt-24 md:ml-52 lg:ml-40  xl:ml-20 p-4 pl-64  pt-500  text-gray-900 dark:text-white md:mr-7 "
+            style="height: 1000px;  ">
+    <div class="  max-w-4xl mx-auto my-8 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
+  <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Smart Messaging & Mailing Platform</h2>
+  <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+    I’m currently developing a powerful and flexible platform that enables users to <strong>schedule emails or messages</strong> for delivery at a specific time. Whether you're looking to send birthday wishes automatically, follow up with clients, or manage campaigns, this platform makes it effortless.
+  </p>
+  <p class="mt-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+    It also supports <strong>mass mailing and messaging</strong> for marketing, updates, or notifications. This system is designed to scale, automate your communication tasks, and streamline user engagement — saving you time and increasing productivity.
+  </p>
+  <p class="mt-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+    Stay tuned for more features coming soon, including analytics, custom templates, and integrations with your favorite tools.
+  </p>
+</div>
+
+
+  </div>
+
+ </div>
+
+
+
+ <script>
+    console.log("This is the products page");
+ </script>
+    </body>
+ 
+</html>

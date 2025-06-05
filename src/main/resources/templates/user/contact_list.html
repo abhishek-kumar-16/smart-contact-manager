@@ -12,15 +12,15 @@
     <div id="content">
 
         <!-- sidebar  -->
-        <div th:if="${user}">
+        <div th:if="${user}" >
             <div th:replace="user/sidebar::sidebar"></div>
         </div>
 
-        <div class="p-4 pl-64  pt-500 mt-10 text-red-500" style="  margin-left: 17%; margin-top: 4%;">
+        <div class="p-4 pt-16 pr-4 mt-24 md:ml-56 md:pt-0 gap-y-4 sm:ml-64 max-[1270px]:pt-52  " >
 
 
             <div>
-                <h1 class="text-center text-4xl text-gray-800 pb-2 dark:text-white">All Your contacts </h1>
+                <h1 class="pt-2 text-center text-4xl text-gray-800 pb-2 dark:text-white md:ml-8">All Your contacts </h1>
             </div>
 
             <!--  contact container here onwards -->
