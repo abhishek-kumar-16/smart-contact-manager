@@ -1,6 +1,7 @@
 package com.smartmanager.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,13 +9,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.smartmanager.entities.user;
+import com.smartmanager.forms.ContactUsForm;
 import com.smartmanager.forms.signupForm;
 import com.smartmanager.helpers.notification;
 import com.smartmanager.helpers.notificationType;
+import com.smartmanager.services.EmailService;
 import com.smartmanager.services.userServices;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -23,6 +28,9 @@ public class PageController {
 //   injecting userservices so that it can be used here
 @Autowired
 userServices userServices;
+
+@Autowired
+EmailService emailService;
 
 
    @RequestMapping("home")
@@ -49,7 +57,9 @@ userServices userServices;
        return "services";
    }
    @RequestMapping("contact")
-   public String contact() {
+   public String contact(Model model) {
+       ContactUsForm contactUsForm = new ContactUsForm();
+       model.addAttribute("contactUsForm", contactUsForm);
        System.out.println("services page handler");
        return "contact";
    }
@@ -58,6 +68,11 @@ userServices userServices;
        System.out.println("services page handler");
        return "login";
    }
+   
+  
+   
+
+
    @RequestMapping("signup")
    public String signup(Model model) {
          // model.addAttribute("signupForm", new signupForm());
@@ -131,6 +146,29 @@ session.setAttribute("message", message);
 
  // saving userserservice 
 
+          @RequestMapping(value = "/contact-us", method=RequestMethod.POST)
+          public String ContactUsFormMethod(@Valid @ModelAttribute ContactUsForm contactUsForm, HttpSession session) {
+            String subject = "New Contact Form Submission from " + contactUsForm.getName();
+        String body = "Name: " + contactUsForm.getName() + "\n"
+                    + "Email: " + contactUsForm.getEmail() + "\n"
+                    + "Message:\n" + contactUsForm.getMessage();
+
+        try {
+            emailService.sendEmail("kumarabhishekk16dec@gmail.com", subject, body);
+             notification popupMessage = notification.builder()
+                    .msg("SENT! Thanks for contacting us !")
+                    .type(notificationType.green).build();
+
+            session.setAttribute("message", popupMessage);
+        } catch (Exception e) {
+             notification popupMessage = notification.builder()
+                    .msg("Something went wrong!")
+                    .type(notificationType.red).build();
+
+            session.setAttribute("message", popupMessage);
+        }
+              return "redirect:/contact";
+          }
           
  
  

@@ -22,7 +22,7 @@ public class EmailServiceImpl implements EmailService {
         message.setText(body);
         message.setFrom("Smart Contact Manager <smartcontactmanager@demomailtrap.co>");
         // send the email
-        javaMailSender.send(message);
+        // javaMailSender.send(message);
     }
 
    

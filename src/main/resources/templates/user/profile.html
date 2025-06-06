@@ -13,9 +13,9 @@
         <div th:replace="user/sidebar::sidebar"></div>
     </div>
 
-         <div  class="p-4 sm:pl-64  pt-500 mt-10 h-screen" >
-    <div class="[margin-left:0] [@media(min-width:625px)]:[margin-left:50%] [@media(min-width:1400px)]:[margin-left:0] md:ml-8   max-w-md mx-auto mt-24 md:mt-10 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg text-gray-900 dark:text-white transition-colors duration-300">
-  <div class="flex items-center space-x-4">
+         <div  class="p-4 sm:pl-64  pt-500 mt-10 h-screen md:ml-56  sm:ml-64 " >
+    <div class=" [margin-left:0] [@media(min-width:625px)]:[margin-left:50%] [@media(min-width:1400px)]:[margin-left:0] md:ml-8   max-w-md mx-auto mt-32 md:mt-28 p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg text-gray-900 dark:text-white transition-colors duration-300">
+  <div class="flex items-center space-x-4 ">
     <img th:src="@{${user.profilePic}}" alt="Profile Picture"
       class="w-20 h-20 rounded-full object-cover border-2 border-blue-400 dark:border-blue-500" />
     <div>

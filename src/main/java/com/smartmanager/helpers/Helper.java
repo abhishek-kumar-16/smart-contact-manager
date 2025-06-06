@@ -53,4 +53,11 @@ else{
     return "http://localhost:8081/auth/verify-email?emailToken=" + emailToken;
   }
 
+    public static String getResetPasswordLink(String passwordResetToken) {
+    // This method will return the verification link for the user
+    // It will be used to send the verification link to the user
+    // It will be used in the email service
+    return "http://localhost:8081/auth/reset-password?passwordResetToken=" + passwordResetToken;
+  }
+
 }

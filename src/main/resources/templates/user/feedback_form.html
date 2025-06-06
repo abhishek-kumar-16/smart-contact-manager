@@ -9,7 +9,9 @@
     <div th:if="${user}">
         <div th:replace="user/sidebar::sidebar"></div>
     </div>
-    <div class="max-w-xl mx-auto mt-28 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md">
+  
+    <div class="p-4 sm:pl-64  pt-500 mt-10 h-screen  md:ml-56   ">
+    <div class="border lg:ml-56 md:ml-56  sm:ml-64 [margin-left:0] [@media(min-width:625px)]:[margin-left:50%] [@media(min-width:1400px)]:[margin-left:0]   max-w-md mx-auto mt-32 md:mt-28 p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md" >
         <div th:replace="notification::notificationbox">Feedback submitted</div>
   <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">We value your feedback</h2>
   
@@ -47,7 +49,7 @@
     </div>
   </form>
 </div>
-
+</div>
   </div>
  <script>
     console.log("This is the home page");

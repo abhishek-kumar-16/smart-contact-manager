@@ -47,6 +47,7 @@ public class user implements UserDetails {
     private boolean emailVerified=false;
     private boolean phoneVerified=false;
     private String emailToken;
+    private String passwordResetToken;
 
     @Enumerated(value = EnumType.STRING)
     private Providers provider=Providers.SELF;
